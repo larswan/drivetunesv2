@@ -1,6 +1,5 @@
-import {firebase} from './firebase/app';
-import 'firebase/firestore'; // if you want to use Firestore
-import 'firebase/auth'; // if you want to use Firebase authentication
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_KEY,
@@ -9,10 +8,15 @@ const firebaseConfig = {
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID 
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app)
 
-export const db = firebase.firestore();
-export const auth = firebase.auth();
+// Initialize Cloud Firestore and get a reference to the service
+export const db = getFirestore(app);
+
+
+

@@ -1,24 +1,25 @@
 import { useState, useEffect } from 'react';
 import { db } from '../firebase';
+import { doc, setDoc } from "firebase/firestore";
 
-export const Test =()=> {
-    
-    const data = {
-        firstName: 'Larson',
-        lastName: 'Collier',
-        age: 30,
-    };
+// Add a new document in collection "cities"
 
-    db.collection('testData')
-        .doc('testNames')
-        .set(data)
-        .then(() => {
-            console.log('Document successfully written!');
-        })
-        .catch(error => {
-            console.error('Error writing document: ', error);
+await setDoc(doc(db, "cities", "LA"), {
+    name: "Los Angeles",
+    state: "CA",
+    country: "USA"
+});
+
+export const Test = () => {
+
+    const handleClick = async () => {
+        await setDoc(doc(db, "cities", "LA"), {
+            name: "Los Angeles",
+            state: "CA",
+            country: "USA"
         });
-
+    }
+    
     // const [data, setData] = useState([]);
 
     // useEffect(() => {
@@ -35,15 +36,7 @@ export const Test =()=> {
 
     return (
         <div>
-
-
-
-            {/* {data.map(item => (
-                <div key={item.id}>
-                    <div>Name: {item.name}</div>
-                    <div>Age: {item.age}</div>
-                </div>
-            ))} */}
+            <button onClick={handleClick}>POST LA to CITIES</button>
         </div>
     );
 }
