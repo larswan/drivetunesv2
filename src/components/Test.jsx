@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import * as firebase from 'firebase/app'
 import { db } from '../firebase';
+// import 'firebase/firestore'
 import { doc, setDoc } from "firebase/firestore";
 
 // Add a new document in collection "cities"
@@ -30,7 +32,18 @@ export const Test = () => {
             "email": email
         }
 
-        console.log(userObject)
+        // Get a reference to the Firestore collection
+        // const db = firebase.firestore()
+        const usersCollection = db.collection('users')
+
+        // Add the user object to the collection
+        usersCollection.add(userObject)
+            .then((docRef) => {
+                console.log("User added with ID: ", docRef.id)
+            })
+            .catch((error) => {
+                console.error("Error adding user: ", error)
+            })
     }
 
     return (
